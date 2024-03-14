@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login Form 22BCE2302</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Courier, monospace;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 100%;
+      max-width: 400px; 
+      padding: 20px;
+      border: 2px solid rgb(122, 197, 232); 
+      border-radius: 10px; 
+      background-color: white;
+      align-items: flex-start; 
+    }
+    .solid {
+      text-align: center;
+      padding: 20px 0; 
+      color: white;
+      border-radius: 5px; 
+      font-size: 52px;
+      margin-bottom: 20px; 
+      background: linear-gradient(rgb(122, 197, 232), rgb(122, 197, 232)); 
+      background-clip: text; 
+      -webkit-background-clip: text; /* used for the login in the top*/
+      -webkit-text-fill-color: transparent; 
+      font-weight: bold; 
+    }
+    .captcha {
+      display: flex;
+      align-items: center;
+      flex-direction: column; 
+    }
+    #captchaValue {
+      height: 40px;
+      padding: 10px;
+      line-height: 20px;
+      background-color: #fff;
+      border-radius: 10px 0 0 10px;
+      color: #000;
+      font-weight: 700;
+      font-size: 20px;
+      margin-bottom: 10px; 
+    }
+    #captchaWarning {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px; 
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      margin-bottom: 5px; 
+      font-size: 18px; 
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px; 
+      border: 1px solid #ccc;
+      border-radius: 5px; 
+      font-size: 16px; 
+    }
+    button {
+      width: 100%;
+      padding: 10px 15px;
+      background-color: rgb(122, 197, 232);
+      color: white;
+      border: none;
+      border-radius: 5px; 
+      cursor: pointer;
+      font-size: 18px; 
+    }
+    button:hover {
+      background-color: #0b5ed7; 
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="solid"><b>LOGIN</b></h1>
+    <form>
+      <label for="Username">Username:</label>
+      <input type="text" id="Username" name="Username">
+      <label for="Password">Password:</label>
+      <input type="text" id="Password" name="Password">
+      <div class="captcha">
+        <div id="captchaValue"></div>
+        <input type="text" name="captchaInput" id="captchaInput" placeholder="Enter Captcha">
+        <div id="captchaWarning"></div>
+      </div>
+      <button type="button" onclick="validateForm()"><b>Submit</b></button>
+    </form>
+  </div>
+  <script>
+    function generateRandomString(length) {
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      var result = '';
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return result.toUpperCase();
+    }
+    function generateCaptcha() {
+      var captcha = generateRandomString(6);
+      document.getElementById("captchaValue").textContent = captcha;
+    }
+    function validateCaptcha() {
+      var captchaValue = document.getElementById("captchaValue").textContent;
+      var userInput = document.getElementById("captchaInput").value.toUpperCase();
+      if (userInput === captchaValue) {
+        return true;
+      } else {
+        document.getElementById("captchaWarning").textContent = "Invalid Captcha. Please try again.";
+        document.getElementById("captchaInput").value = "";
+        generateCaptcha();
+        return false;
+      }
+    }
+    function validateForm() {
+      var username = document.getElementById("Username").value;
+      var password = document.getElementById("Password").value;
+      if (username === "" || password === "") {
+        alert("Please enter both username and password.");
+      } else {
+        if (validateCaptcha()) {
+          alert("CAPTCHA VALID. LOGIN SUCCESSFUL.");
+        }
+      }
+    }
+    window.onload = function () {
+      generateCaptcha();
+    };
+  </script>
+</body>
+</html>
